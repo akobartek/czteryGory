@@ -1,0 +1,14 @@
+<resources>
+    <!-- BASIC STRINGS -->
+    <string name="cd_navigate_up">Cofnij na poprzedni ekran</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Anuluj</string>
+    <string name="save">Zapisz</string>
+    <string name="no_internet_title">Brak Internetu</string>
+    <string name="no_internet_reconnect_message">Wystąpił problem z połączeniem internetowym, chcesz spróbować ponownie?</string>
+    <string name="try_again">Spróbuj</string>
+    <string name="load">Załaduj</string>
+    <string name="stop">Przerwij</string>
+    <string name="password">Hasło</string>
+    <string name="cd_clear_field">Wyczyść pole</string>
+</resources>

@@ -16,3 +16,9 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+**/release/
+**/*.resolved/
+
+*.aab
+**/google-services.json
+**/GoogleService-Info.plist
