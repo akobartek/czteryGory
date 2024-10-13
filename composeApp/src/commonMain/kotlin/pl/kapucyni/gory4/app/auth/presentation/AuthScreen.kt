@@ -3,10 +3,8 @@ package pl.kapucyni.gory4.app.auth.presentation
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -57,7 +55,6 @@ import czterygory.composeapp.generated.resources.ok
 import czterygory.composeapp.generated.resources.password
 import czterygory.composeapp.generated.resources.password_error_empty
 import czterygory.composeapp.generated.resources.password_error_invalid
-import czterygory.composeapp.generated.resources.password_error_too_short
 import czterygory.composeapp.generated.resources.password_error_wrong
 import czterygory.composeapp.generated.resources.show_password
 import czterygory.composeapp.generated.resources.sign_in
@@ -70,9 +67,7 @@ import czterygory.composeapp.generated.resources.verify_email_send_again
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import pl.kapucyni.gory4.app.auth.presentation.composables.ResetPasswordDialog
-import pl.kapucyni.gory4.app.common.presentation.Screen
 import pl.kapucyni.gory4.app.common.presentation.SnackbarEvent
-import pl.kapucyni.gory4.app.common.presentation.SnackbarEvent.*
 import pl.kapucyni.gory4.app.common.presentation.composables.AppAlertDialog
 import pl.kapucyni.gory4.app.common.presentation.composables.AppLogo
 import pl.kapucyni.gory4.app.common.presentation.composables.HeightSpacer
@@ -81,7 +76,7 @@ import pl.kapucyni.gory4.app.common.presentation.composables.NoInternetDialog
 @Composable
 fun AuthScreen(
     showSnackbar: (SnackbarEvent) -> Unit,
-    navigate: (Screen) -> Unit,
+    navigateHome: () -> Unit,
     viewModel: AuthViewModel = koinInject(),
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -90,18 +85,16 @@ fun AuthScreen(
     val interactionSource = remember { MutableInteractionSource() }
 
     val state by viewModel.authState.collectAsStateWithLifecycle()
+    val snackbarState by viewModel.snackbarAuthState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = state) {
-        if (state.isSignedIn) {
-            showSnackbar(SIGNED_IN)
-            // TODO navigate to proper screen
+    LaunchedEffect(state) {
+        if (state.isSignedIn) navigateHome()
+    }
+
+    LaunchedEffect(snackbarState) {
+        snackbarState?.let { snackbarEvent ->
+            showSnackbar(snackbarEvent)
         }
-        if (state.signInErrorSnackbarVisible)
-            showSnackbar(SIGN_IN_ERROR)
-        if (state.signUpErrorSnackbarVisible)
-            showSnackbar(SIGN_UP_ERROR)
-        if (state.forgottenPasswordDialogSuccess)
-            showSnackbar(FORGOTTEN_PASSWORD_MESSAGE_SENT)
     }
 
     Scaffold(
@@ -198,7 +191,6 @@ fun AuthScreen(
                             text = stringResource(
                                 when (state.passwordError) {
                                     PasswordErrorType.EMPTY -> Res.string.password_error_empty
-                                    PasswordErrorType.TOO_SHORT -> Res.string.password_error_too_short
                                     PasswordErrorType.WRONG -> Res.string.password_error_wrong
                                     PasswordErrorType.INVALID -> Res.string.password_error_invalid
                                     else -> Res.string.empty_field_error

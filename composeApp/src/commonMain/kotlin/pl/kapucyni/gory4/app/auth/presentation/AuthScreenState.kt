@@ -8,13 +8,10 @@ data class AuthScreenState(
     val passwordError: PasswordErrorType? = null,
     val isSignedIn: Boolean = false,
     val isSignedUpDialogVisible: Boolean = false,
-    val signInErrorSnackbarVisible: Boolean = false,
-    val signUpErrorSnackbarVisible: Boolean = false,
     val noInternetAction: NoInternetAction? = null,
     val forgottenPasswordDialogVisible: Boolean = false,
-    val forgottenPasswordDialogSuccess: Boolean = false,
     val forgottenPasswordDialogError: Boolean = false,
-    val emailUnverifiedDialogVisible: Boolean = false
+    val emailUnverifiedDialogVisible: Boolean = false,
 )
 
 enum class EmailErrorType {
@@ -22,7 +19,7 @@ enum class EmailErrorType {
 }
 
 enum class PasswordErrorType {
-    EMPTY, TOO_SHORT, WRONG, INVALID
+    EMPTY, WRONG, INVALID
 }
 
 enum class NoInternetAction {

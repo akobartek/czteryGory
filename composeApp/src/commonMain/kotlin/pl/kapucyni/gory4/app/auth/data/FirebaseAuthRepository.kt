@@ -52,7 +52,6 @@ class FirebaseAuthRepository(
         return try {
             auth.sendPasswordResetEmail(email)
             Result.success(true)
-            // TODO() -> CHECK IF IT THROWS EXCEPTIONS
         } catch (exc: Exception) {
             Result.failure(exc)
         }

@@ -23,7 +23,10 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import pl.kapucyni.gory4.app.common.presentation.Screen.Auth
+import pl.kapucyni.gory4.app.common.presentation.Screen.Home
 import pl.kapucyni.gory4.app.auth.presentation.AuthScreen
+import pl.kapucyni.gory4.app.common.utils.navigateSafely
+import pl.kapucyni.gory4.app.home.presentation.HomeScreen
 import pl.kapucyni.gory4.app.theme.AppTheme
 
 @Composable
@@ -53,18 +56,34 @@ fun App() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = Auth,
+                startDestination = Home,
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.surface)
                     .windowInsetsPadding(WindowInsets.safeDrawing)
             ) {
+                composable<Home> {
+                    HomeScreen(
+                        showSnackbar = { event ->
+                            snackbarMessageRes = event.res
+                        },
+                        navigate = { screen ->
+                            navController.navigateSafely(
+                                route = screen,
+                                screenToClean = if (screen == Auth) Home else null,
+                            )
+                        }
+                    )
+                }
                 composable<Auth> {
                     AuthScreen(
                         showSnackbar = { event ->
                             snackbarMessageRes = event.res
                         },
-                        navigate = { screen ->
-                            navController.navigate(screen)
+                        navigateHome = {
+                            navController.navigateSafely(
+                                route = Home,
+                                screenToClean = Auth,
+                            )
                         }
                     )
                 }

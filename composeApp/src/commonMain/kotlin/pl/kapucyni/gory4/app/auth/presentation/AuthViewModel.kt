@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import pl.kapucyni.gory4.app.auth.domain.AuthRepository
 import pl.kapucyni.gory4.app.auth.domain.EmailNotVerifiedException
 import pl.kapucyni.gory4.app.common.data.PreferencesRepository
+import pl.kapucyni.gory4.app.common.presentation.SnackbarEvent
 
 class AuthViewModel(
     private val authRepository: AuthRepository,
@@ -24,6 +25,9 @@ class AuthViewModel(
 
     private val _authState = MutableStateFlow(AuthScreenState())
     val authState: StateFlow<AuthScreenState> = _authState.asStateFlow()
+
+    private val _snackbarAuthState = MutableStateFlow<SnackbarEvent?>(null)
+    val snackbarAuthState: StateFlow<SnackbarEvent?> = _snackbarAuthState.asStateFlow()
 
     init {
         viewModelScope.launch { updateEmail(preferencesRepository.getLastUsedEmail()) }
@@ -73,9 +77,11 @@ class AuthViewModel(
             _authState.update {
                 if (result.isSuccess && result.getOrDefault(false)) {
                     preferencesRepository.updateLastUsedEmail(authState.value.email)
+                    _snackbarAuthState.update { SnackbarEvent.SIGNED_IN }
                     it.copy(isSignedIn = true)
-                } else result.exceptionOrNull()?.let { exc ->
-                    when (exc) {
+                } else {
+                    _snackbarAuthState.update { SnackbarEvent.SIGN_IN_ERROR }
+                    when (result.exceptionOrNull()) {
                         is FirebaseAuthInvalidUserException ->
                             it.copy(emailError = EmailErrorType.NO_USER)
 
@@ -88,9 +94,9 @@ class AuthViewModel(
                         is FirebaseAuthInvalidCredentialsException ->
                             it.copy(passwordError = PasswordErrorType.INVALID)
 
-                        else -> it.copy(signInErrorSnackbarVisible = true)
+                        else -> it
                     }
-                } ?: it.copy(signInErrorSnackbarVisible = true)
+                }
             }
         }
     }
@@ -102,33 +108,36 @@ class AuthViewModel(
             _authState.update {
                 if (result.isSuccess && result.getOrDefault(false))
                     it.copy(isSignedUpDialogVisible = true)
-                else result.exceptionOrNull()?.let { exc ->
-                    when (exc) {
+                else {
+                    _snackbarAuthState.update { SnackbarEvent.SIGN_UP_ERROR }
+                    when (result.exceptionOrNull()) {
                         is FirebaseAuthUserCollisionException ->
                             it.copy(emailError = EmailErrorType.USER_EXISTS)
 
                         is FirebaseNetworkException ->
                             it.copy(noInternetAction = NoInternetAction.SIGN_UP)
 
-                        else -> it.copy(signUpErrorSnackbarVisible = true)
+                        else -> it
                     }
-                } ?: it.copy(signUpErrorSnackbarVisible = true)
+                }
             }
         }
     }
 
     fun sendResetPasswordEmail(email: String) {
-        _authState.update { it.copy(forgottenPasswordDialogError = !email.isValidEmail()) }
+        if (!email.isValidEmail()) {
+            _authState.update { it.copy(forgottenPasswordDialogError = true) }
+            return
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             val result = authRepository.sendRecoveryEmail(email)
             _authState.update {
-                if (result.isSuccess && result.getOrDefault(false))
-                    it.copy(
-                        forgottenPasswordDialogSuccess = true,
-                        forgottenPasswordDialogVisible = false
-                    )
-                else result.exceptionOrNull()?.let { exc ->
-                    when (exc) {
+                if (result.isSuccess && result.getOrDefault(false)) {
+                    _snackbarAuthState.update { SnackbarEvent.FORGOTTEN_PASSWORD_MESSAGE_SENT }
+                    it.copy(forgottenPasswordDialogVisible = false)
+                } else {
+                    when (result.exceptionOrNull()) {
                         is FirebaseNetworkException -> it.copy(
                             noInternetAction = NoInternetAction.RESET_PASSWORD,
                             forgottenPasswordDialogVisible = false
@@ -136,7 +145,7 @@ class AuthViewModel(
 
                         else -> it.copy(forgottenPasswordDialogError = true)
                     }
-                } ?: it.copy(forgottenPasswordDialogError = true)
+                }
             }
         }
     }
@@ -147,7 +156,6 @@ class AuthViewModel(
                 emailError = if (state.email.isValidEmail()) null else EmailErrorType.INVALID,
                 passwordError = when {
                     (!isSigningUp && state.password.isBlank()) -> PasswordErrorType.EMPTY
-                    (isSigningUp && state.password.length < 8) -> PasswordErrorType.TOO_SHORT
                     (isSigningUp && !state.password.isValidPassword()) -> PasswordErrorType.WRONG
                     else -> null
                 }
@@ -158,18 +166,21 @@ class AuthViewModel(
     }
 
     private fun CharSequence.isValidPassword(): Boolean {
+        if (this.length < 8) return false
+
         val passwordRegex = Regex("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z]).{8,20})")
         return this.matches(passwordRegex)
     }
 
     private fun CharSequence.isValidEmail(): Boolean {
-        val emailRegex = Regex("[a-zA-Z0-9+._%\\-]{1,256}" +
-                "@" +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                "(" +
-                "\\." +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                ")+"
+        val emailRegex = Regex(
+            "[a-zA-Z0-9+._%\\-]{1,256}" +
+                    "@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
         )
         return this.matches(emailRegex)
     }
