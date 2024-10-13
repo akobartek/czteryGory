@@ -63,9 +63,6 @@ fun App() {
             ) {
                 composable<Home> {
                     HomeScreen(
-                        showSnackbar = { event ->
-                            snackbarMessageRes = event.res
-                        },
                         navigate = { screen ->
                             navController.navigateSafely(
                                 route = screen,

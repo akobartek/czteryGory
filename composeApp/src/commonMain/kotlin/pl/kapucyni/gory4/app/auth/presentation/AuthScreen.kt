@@ -46,7 +46,6 @@ import czterygory.composeapp.generated.resources.cancel
 import czterygory.composeapp.generated.resources.cd_clear_field
 import czterygory.composeapp.generated.resources.email
 import czterygory.composeapp.generated.resources.email_error_invalid
-import czterygory.composeapp.generated.resources.email_error_no_user
 import czterygory.composeapp.generated.resources.email_error_user_exists
 import czterygory.composeapp.generated.resources.empty_field_error
 import czterygory.composeapp.generated.resources.forgot_password
@@ -108,11 +107,10 @@ fun AuthScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .padding(horizontal = 48.dp)
+                .padding(horizontal = 40.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             AppLogo(
-                size = 160.dp,
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .clickable(
@@ -142,13 +140,12 @@ fun AuthScreen(
                         }
                 },
                 isError = state.emailError != null,
-                supportingText = if (state.emailError != null) {
+                supportingText = if (state.emailError != null && state.emailError != EmailErrorType.OTHER) {
                     {
                         Text(
                             text = stringResource(
                                 when (state.emailError) {
                                     EmailErrorType.INVALID -> Res.string.email_error_invalid
-                                    EmailErrorType.NO_USER -> Res.string.email_error_no_user
                                     EmailErrorType.USER_EXISTS -> Res.string.email_error_user_exists
                                     else -> Res.string.empty_field_error
                                 }

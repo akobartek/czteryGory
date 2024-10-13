@@ -15,7 +15,7 @@ data class AuthScreenState(
 )
 
 enum class EmailErrorType {
-    INVALID, NO_USER, USER_EXISTS
+    INVALID, USER_EXISTS, OTHER
 }
 
 enum class PasswordErrorType {

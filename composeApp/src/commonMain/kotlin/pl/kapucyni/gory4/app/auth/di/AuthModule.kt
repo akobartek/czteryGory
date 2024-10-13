@@ -7,7 +7,7 @@ import pl.kapucyni.gory4.app.auth.domain.AuthRepository
 import pl.kapucyni.gory4.app.auth.presentation.AuthViewModel
 
 val authModule = module {
-    single<AuthRepository> { FirebaseAuthRepository(get(), get()) }
+    factory<AuthRepository> { FirebaseAuthRepository(get(), get()) }
 
     viewModel { AuthViewModel(get(), get()) }
 }

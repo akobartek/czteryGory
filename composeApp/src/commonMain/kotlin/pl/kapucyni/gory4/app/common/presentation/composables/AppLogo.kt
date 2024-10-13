@@ -15,7 +15,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun AppLogo(
-    size: Dp = 80.dp,
+    size: Dp = 160.dp,
     modifier: Modifier = Modifier,
 ) {
     Image(

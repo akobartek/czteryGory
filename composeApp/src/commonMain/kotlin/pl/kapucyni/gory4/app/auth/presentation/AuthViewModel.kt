@@ -3,8 +3,6 @@ package pl.kapucyni.gory4.app.auth.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.gitlive.firebase.FirebaseNetworkException
-import dev.gitlive.firebase.auth.FirebaseAuthInvalidCredentialsException
-import dev.gitlive.firebase.auth.FirebaseAuthInvalidUserException
 import dev.gitlive.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -82,19 +80,17 @@ class AuthViewModel(
                 } else {
                     _snackbarAuthState.update { SnackbarEvent.SIGN_IN_ERROR }
                     when (result.exceptionOrNull()) {
-                        is FirebaseAuthInvalidUserException ->
-                            it.copy(emailError = EmailErrorType.NO_USER)
-
                         is EmailNotVerifiedException ->
                             it.copy(emailUnverifiedDialogVisible = true)
 
                         is FirebaseNetworkException ->
                             it.copy(noInternetAction = NoInternetAction.SIGN_IN)
 
-                        is FirebaseAuthInvalidCredentialsException ->
-                            it.copy(passwordError = PasswordErrorType.INVALID)
-
-                        else -> it
+                        else ->
+                            it.copy(
+                                emailError = EmailErrorType.OTHER,
+                                passwordError = PasswordErrorType.INVALID
+                            )
                     }
                 }
             }
@@ -103,13 +99,13 @@ class AuthViewModel(
 
     fun signUp() {
         if (!validateInput(true)) return
+
         viewModelScope.launch(Dispatchers.IO) {
             val result = authRepository.signUp(authState.value.email, authState.value.password)
             _authState.update {
                 if (result.isSuccess && result.getOrDefault(false))
                     it.copy(isSignedUpDialogVisible = true)
                 else {
-                    _snackbarAuthState.update { SnackbarEvent.SIGN_UP_ERROR }
                     when (result.exceptionOrNull()) {
                         is FirebaseAuthUserCollisionException ->
                             it.copy(emailError = EmailErrorType.USER_EXISTS)
@@ -117,7 +113,10 @@ class AuthViewModel(
                         is FirebaseNetworkException ->
                             it.copy(noInternetAction = NoInternetAction.SIGN_UP)
 
-                        else -> it
+                        else -> {
+                            _snackbarAuthState.update { SnackbarEvent.SIGN_UP_ERROR }
+                            it
+                        }
                     }
                 }
             }

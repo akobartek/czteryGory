@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import pl.kapucyni.gory4.app.auth.domain.AuthRepository
 import pl.kapucyni.gory4.app.auth.domain.EmailNotVerifiedException
 import pl.kapucyni.gory4.app.auth.domain.model.User
+import pl.kapucyni.gory4.app.common.utils.saveObject
 
 class FirebaseAuthRepository(
     private val auth: FirebaseAuth,
@@ -35,9 +36,14 @@ class FirebaseAuthRepository(
                 withContext(NonCancellable) {
                     auth.currentUser?.let { user ->
                         user.sendEmailVerification()
-                        firestore.collection(COLLECTION_USERS)
-                            .document(user.uid)
-                            .set(User(email = user.email))
+                        firestore.saveObject(
+                            collectionName = COLLECTION_USERS,
+                            id = user.uid,
+                            data = User(
+                                id = user.uid,
+                                email = user.email,
+                            )
+                        )
                         signOut()
                     }
                     Result.success(true)
