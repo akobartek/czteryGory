@@ -6,7 +6,8 @@ import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import pl.kapucyni.gory4.app.auth.domain.AuthRepository
 import pl.kapucyni.gory4.app.auth.domain.EmailNotVerifiedException
-import pl.kapucyni.gory4.app.auth.domain.model.User
+import pl.kapucyni.gory4.app.common.domain.model.User
+import pl.kapucyni.gory4.app.common.data.COLLECTION_USERS
 import pl.kapucyni.gory4.app.common.utils.saveObject
 
 class FirebaseAuthRepository(
@@ -73,9 +74,5 @@ class FirebaseAuthRepository(
 
     override suspend fun signOut() {
         auth.signOut()
-    }
-
-    companion object {
-        private const val COLLECTION_USERS = "users"
     }
 }

@@ -24,10 +24,13 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import pl.kapucyni.gory4.app.common.presentation.Screen.Auth
 import pl.kapucyni.gory4.app.common.presentation.Screen.Home
+import pl.kapucyni.gory4.app.common.presentation.Screen.UsersList
 import pl.kapucyni.gory4.app.auth.presentation.AuthScreen
 import pl.kapucyni.gory4.app.common.utils.navigateSafely
+import pl.kapucyni.gory4.app.common.utils.navigateUpSafely
 import pl.kapucyni.gory4.app.home.presentation.HomeScreen
 import pl.kapucyni.gory4.app.theme.AppTheme
+import pl.kapucyni.gory4.app.users.presentation.UsersListScreen
 
 @Composable
 @Preview
@@ -71,6 +74,7 @@ fun App() {
                         }
                     )
                 }
+
                 composable<Auth> {
                     AuthScreen(
                         showSnackbar = { event ->
@@ -81,6 +85,14 @@ fun App() {
                                 route = Home,
                                 screenToClean = Auth,
                             )
+                        }
+                    )
+                }
+
+                composable<UsersList> {
+                    UsersListScreen(
+                        navigateUp = {
+                            navController.navigateUpSafely(UsersList::class.simpleName)
                         }
                     )
                 }

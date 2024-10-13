@@ -44,20 +44,3 @@ suspend inline fun <reified T> FirebaseFirestore.saveObject(
     this.collection(collectionName)
         .document(id)
         .set(data)
-
-suspend inline fun FirebaseFirestore.deleteObject(
-    collectionName: String,
-    id: String,
-) =
-    this.collection(collectionName)
-        .document(id)
-        .delete()
-
-suspend inline fun FirebaseFirestore.checkIfDocumentExists(
-    collectionName: String,
-    documentId: String,
-) =
-    this.collection(collectionName)
-        .document(documentId)
-        .get()
-        .exists

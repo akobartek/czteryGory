@@ -50,4 +50,8 @@
     <string name="reset_password_dialog_title">Resetowanie hasła</string>
     <string name="reset_password_dialog_message">Wpisz adres mailowy:</string>
     <string name="reset_password_error">Resetowanie nieudane, sprawdź połączenie i poprawność adresu!</string>
+
+    <!-- LISTS STRINGS -->
+    <string name="search">Szukaj</string>
+    <string name="empty_search_list">Nie znaleziono żadnej osoby związanej z podanym wyrażaniem!</string>
 </resources>

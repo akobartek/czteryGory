@@ -88,7 +88,7 @@ fun HomeScreen(
                         UserType.ADMIN -> {
                             HomeScreenButton(
                                 stringRes = Res.string.list_of_users,
-                                action = {/** TODO */},
+                                action = { navigate(Screen.UsersList) },
                             )
                             HeightSpacer(4.dp)
                             HomeScreenButton(
