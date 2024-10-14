@@ -74,14 +74,14 @@ fun HomeScreen(
                         UserType.MEMBER -> {
                             HomeScreenButton(
                                 stringRes = Res.string.list_of_directors,
-                                action = {/** TODO */},
+                                action = { navigate(Screen.DirectorsList(false)) },
                             )
                         }
 
                         UserType.DIRECTOR -> {
                             HomeScreenButton(
                                 stringRes = Res.string.profile_edition,
-                                action = {/** TODO */},
+                                action = { navigate(Screen.DirectorDetails()) },
                             )
                         }
 
@@ -93,7 +93,7 @@ fun HomeScreen(
                             HeightSpacer(4.dp)
                             HomeScreenButton(
                                 stringRes = Res.string.list_of_directors,
-                                action = {/** TODO */},
+                                action = { navigate(Screen.DirectorsList(true)) },
                             )
                         }
                     }

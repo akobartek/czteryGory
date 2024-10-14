@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import czterygory.composeapp.generated.resources.Res
@@ -28,7 +29,8 @@ fun EmptyListInfo(modifier: Modifier = Modifier) {
         Image(
             imageVector = Icons.Filled.PsychologyAlt,
             contentDescription = null,
-            modifier = Modifier.size(160.dp)
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+            modifier = Modifier.size(160.dp),
         )
         HeightSpacer(4.dp)
         Text(

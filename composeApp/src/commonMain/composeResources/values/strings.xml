@@ -54,6 +54,11 @@
     <!-- LISTS STRINGS -->
     <string name="search">Szukaj</string>
     <string name="empty_search_list">Nie znaleziono żadnej osoby związanej z podanym wyrażaniem!</string>
+
+    <!-- DIRECTORS STRINGS -->
+    <string name="director_location">%1$s, %2$s</string>
+
+    <!-- USERS STRINGS -->
     <string name="created_at">Utworzono: %1$s</string>
     <string name="user_type_member">Uczestnik</string>
     <string name="user_type_director">Kierownik duchowy</string>

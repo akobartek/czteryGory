@@ -6,7 +6,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.koinInject
 import pl.kapucyni.gory4.app.common.domain.model.User
 import pl.kapucyni.gory4.app.common.presentation.composables.ListScreenLayout
-import pl.kapucyni.gory4.app.users.presentation.composables.UserItemLayout
+import pl.kapucyni.gory4.app.users.presentation.composables.UserListItemLayout
 
 @Composable
 fun UsersListScreen(
@@ -23,7 +23,7 @@ fun UsersListScreen(
         onBackPressed = navigateUp,
         itemLayout = { item ->
             if (item is User)
-                UserItemLayout(
+                UserListItemLayout(
                     user = item,
                     onTypeChange = viewModel::onUserTypeChange,
                 )

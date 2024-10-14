@@ -28,7 +28,7 @@ import pl.kapucyni.gory4.app.common.domain.model.UserType.*
 import pl.kapucyni.gory4.app.common.presentation.composables.HeightSpacer
 
 @Composable
-fun UserItemLayout(
+fun UserListItemLayout(
     user: User,
     onTypeChange: (User) -> Unit
 ) {

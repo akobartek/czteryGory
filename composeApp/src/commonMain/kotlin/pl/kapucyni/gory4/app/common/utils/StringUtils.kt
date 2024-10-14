@@ -5,6 +5,8 @@ import kotlin.math.min
 
 expect fun String.normalizeMultiplatform(): String
 
+expect fun randomUUID(): String
+
 fun String.getSimilarity(query: CharSequence): Double {
     val maxLength = max(this.length, query.length)
     val levenshteinDistance = levenshteinDistance(this, query)

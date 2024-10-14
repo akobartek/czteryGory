@@ -9,7 +9,7 @@ import pl.kapucyni.gory4.app.common.utils.getFirestoreCollection
 import pl.kapucyni.gory4.app.common.utils.saveObject
 import pl.kapucyni.gory4.app.users.domain.UsersListRepository
 
-class FirestoreUsersListRepository(
+class FirebaseUsersListRepository(
     private val firestore: FirebaseFirestore,
 ) : UsersListRepository {
 
@@ -24,13 +24,11 @@ class FirestoreUsersListRepository(
                 else -> user.userType
             }
         )
-        changedUser.id?.let { userId ->
-            firestore.saveObject(
-                collectionName = COLLECTION_USERS,
-                id = userId,
-                data = changedUser,
-            )
-        }
+        firestore.saveObject(
+            collectionName = COLLECTION_USERS,
+            id = changedUser.id,
+            data = changedUser,
+        )
     }
 
     override suspend fun filterUsers(users: List<User>, query: String): List<User> =

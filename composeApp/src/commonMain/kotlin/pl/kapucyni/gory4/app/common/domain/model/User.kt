@@ -9,7 +9,7 @@ import pl.kapucyni.gory4.app.common.utils.getFormattedDateTime
 
 @Serializable
 data class User(
-    val id: String? = null,
+    val id: String = "",
     val email: String? = null,
     val userType: UserType = UserType.NONE,
     val createdAt: Long = Clock.System.now().toEpochMilliseconds(),

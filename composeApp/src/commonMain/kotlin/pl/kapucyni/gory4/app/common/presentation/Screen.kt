@@ -12,4 +12,10 @@ sealed class Screen {
 
     @Serializable
     data object UsersList : Screen()
+
+    @Serializable
+    data class DirectorsList(val addingEnabled: Boolean) : Screen()
+
+    @Serializable
+    data class DirectorDetails(val directorId: String? = null): Screen()
 }
