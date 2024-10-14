@@ -17,7 +17,7 @@
     <!-- HOME STRINGS -->
     <string name="user_wait_for_approval">Aby uzyskać dostęp do zawartości aplikacji, Bracia muszą zatwierdzić Twoje konto!</string>
     <string name="list_of_directors">Lista kierowników</string>
-    <string name="list_of_users">Lista uczestników</string>
+    <string name="list_of_users">Lista użytkowników</string>
     <string name="profile_edition">Edycja profilu</string>
 
     <!-- AUTH STRINGS -->
@@ -54,4 +54,9 @@
     <!-- LISTS STRINGS -->
     <string name="search">Szukaj</string>
     <string name="empty_search_list">Nie znaleziono żadnej osoby związanej z podanym wyrażaniem!</string>
+    <string name="created_at">Utworzono: %1$s</string>
+    <string name="user_type_member">Uczestnik</string>
+    <string name="user_type_director">Kierownik duchowy</string>
+    <string name="user_type_admin">Administrator</string>
+    <string name="change_user_type">Zmiana statusu użytkownika</string>
 </resources>
