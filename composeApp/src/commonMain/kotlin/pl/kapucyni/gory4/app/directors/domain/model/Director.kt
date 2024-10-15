@@ -15,6 +15,7 @@ data class Director(
     val country: String = "Polska",
     val description: String = "",
     val emailAddress: String = "",
+    val phoneCountryCode: String = "+48",
     val phoneNumber: String = "",
     val placesLeft: Int = 0,
     val photoUrl: String? = null,

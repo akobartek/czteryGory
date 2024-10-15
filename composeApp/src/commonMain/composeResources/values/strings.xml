@@ -68,6 +68,8 @@
     <string name="director_email">Adres mailowy</string>
     <string name="director_phone">Numer telefonu</string>
     <string name="director_places_left">Pozostało miejsc:</string>
+    <string name="cd_director_phone">Zadzwoń do kierownika</string>
+    <string name="cd_director_email">Wyślij maila do kierownika</string>
 
     <!-- USERS STRINGS -->
     <string name="created_at">Utworzono: %1$s</string>

@@ -1,6 +1,5 @@
 package pl.kapucyni.gory4.app.users.di
 
-import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pl.kapucyni.gory4.app.users.data.FirebaseUsersListRepository
 import pl.kapucyni.gory4.app.users.domain.UsersListRepository
@@ -16,5 +15,5 @@ val usersListModule = module {
     factory { FilterUsersUseCase(get()) }
     factory { ChangeUserStatusUseCase(get()) }
 
-    viewModel { UsersListViewModel(get(), get(), get()) }
+    single { UsersListViewModel(get(), get(), get()) }
 }

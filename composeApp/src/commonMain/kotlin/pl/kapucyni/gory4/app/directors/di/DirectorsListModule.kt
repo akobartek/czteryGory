@@ -19,6 +19,6 @@ val directorsModule = module {
     factory { SaveDirectorUseCase(get()) }
     factory { GetDirectorByIdUseCase(get()) }
 
-    viewModel { DirectorsListViewModel(get(), get()) }
+    single { DirectorsListViewModel(get(), get()) }
     viewModel { DirectorEditorViewModel(get(), get()) }
 }

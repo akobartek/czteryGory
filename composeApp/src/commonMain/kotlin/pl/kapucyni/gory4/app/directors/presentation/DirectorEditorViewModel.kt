@@ -70,6 +70,10 @@ class DirectorEditorViewModel(
         _director.update { it?.copy(emailAddress = newEmail) }
     }
 
+    fun changePhoneCountryCode(newCode: String) {
+        _director.update { it?.copy(phoneCountryCode = newCode) }
+    }
+
     fun changePhone(newPhone: String) {
         _director.update { it?.copy(phoneNumber = newPhone) }
     }

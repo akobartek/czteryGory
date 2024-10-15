@@ -7,10 +7,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.koinInject
 import pl.kapucyni.gory4.app.common.presentation.composables.ListScreenLayout
 import pl.kapucyni.gory4.app.directors.domain.model.Director
+import pl.kapucyni.gory4.app.directors.presentation.composables.DirectorDetailsDialog
 import pl.kapucyni.gory4.app.directors.presentation.composables.DirectorListItemLayout
 
 @Composable
@@ -23,10 +27,12 @@ fun DirectorsListScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
 
+    var selectedDirector by remember { mutableStateOf<Director?>(null) }
+
     Scaffold(
         floatingActionButton = {
             if (isAdmin)
-                FloatingActionButton(onClick = {openDetails(null)}) {
+                FloatingActionButton(onClick = { openDetails(null) }) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = null,
@@ -43,11 +49,19 @@ fun DirectorsListScreen(
                 if (item is Director) {
                     DirectorListItemLayout(
                         director = item,
-                        onClick = openDetails,
+                        onClick = { director ->
+                            if (isAdmin) openDetails(director)
+                            else selectedDirector = director
+                        },
                         isAdmin = isAdmin,
                     )
                 }
             },
         )
     }
+
+    DirectorDetailsDialog(
+        director = selectedDirector,
+        onDismiss = { selectedDirector = null },
+    )
 }
