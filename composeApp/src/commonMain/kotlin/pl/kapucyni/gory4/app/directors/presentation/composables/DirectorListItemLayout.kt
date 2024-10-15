@@ -63,7 +63,6 @@ fun DirectorListItemLayout(
                         director.region
                     ),
                     style = MaterialTheme.typography.bodyMedium,
-                    fontStyle = FontStyle.Italic,
                 )
             }
         }
