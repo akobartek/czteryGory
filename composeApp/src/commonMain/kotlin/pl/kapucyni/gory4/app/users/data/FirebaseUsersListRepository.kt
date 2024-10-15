@@ -26,7 +26,7 @@ class FirebaseUsersListRepository(
         )
         firestore.saveObject(
             collectionName = COLLECTION_USERS,
-            id = changedUser.id,
+            id = changedUser.userId,
             data = changedUser,
         )
     }

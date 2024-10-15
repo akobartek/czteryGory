@@ -17,7 +17,7 @@ import pl.kapucyni.gory4.app.directors.presentation.composables.DirectorListItem
 fun DirectorsListScreen(
     navigateUp: () -> Unit,
     openDetails: (Director?) -> Unit,
-    addingEnabled: Boolean,
+    isAdmin: Boolean,
     viewModel: DirectorsListViewModel = koinInject(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -25,7 +25,7 @@ fun DirectorsListScreen(
 
     Scaffold(
         floatingActionButton = {
-            if (addingEnabled)
+            if (isAdmin)
                 FloatingActionButton(onClick = {openDetails(null)}) {
                     Icon(
                         imageVector = Icons.Default.Add,
@@ -44,6 +44,7 @@ fun DirectorsListScreen(
                     DirectorListItemLayout(
                         director = item,
                         onClick = openDetails,
+                        isAdmin = isAdmin,
                     )
                 }
             },

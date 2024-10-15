@@ -62,7 +62,8 @@ fun HomeScreen(
                 }
 
                 is HomeScreenState.UserSignedIn -> {
-                    when ((state as HomeScreenState.UserSignedIn).userType) {
+                    val signedInState = state as HomeScreenState.UserSignedIn
+                    when (signedInState.userType) {
                         UserType.NONE -> {
                             Text(
                                 text = stringResource(Res.string.user_wait_for_approval),
@@ -81,7 +82,7 @@ fun HomeScreen(
                         UserType.DIRECTOR -> {
                             HomeScreenButton(
                                 stringRes = Res.string.profile_edition,
-                                action = { navigate(Screen.DirectorDetails()) },
+                                action = { navigate(Screen.DirectorEditor(signedInState.userId)) },
                             )
                         }
 

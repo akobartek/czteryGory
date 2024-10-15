@@ -15,6 +15,7 @@ import pl.kapucyni.gory4.app.auth.domain.AuthRepository
 import pl.kapucyni.gory4.app.auth.domain.EmailNotVerifiedException
 import pl.kapucyni.gory4.app.common.data.PreferencesRepository
 import pl.kapucyni.gory4.app.common.presentation.SnackbarEvent
+import pl.kapucyni.gory4.app.common.utils.isValidEmail
 
 class AuthViewModel(
     private val authRepository: AuthRepository,
@@ -169,18 +170,5 @@ class AuthViewModel(
 
         val passwordRegex = Regex("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z]).{8,20})")
         return this.matches(passwordRegex)
-    }
-
-    private fun CharSequence.isValidEmail(): Boolean {
-        val emailRegex = Regex(
-            "[a-zA-Z0-9+._%\\-]{1,256}" +
-                    "@" +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                    "(" +
-                    "\\." +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                    ")+"
-        )
-        return this.matches(emailRegex)
     }
 }

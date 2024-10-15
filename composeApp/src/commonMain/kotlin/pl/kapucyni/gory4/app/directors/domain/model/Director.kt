@@ -4,20 +4,21 @@ import kotlinx.serialization.Serializable
 import pl.kapucyni.gory4.app.common.domain.model.ListItem
 import pl.kapucyni.gory4.app.common.utils.getSimilarity
 import pl.kapucyni.gory4.app.common.utils.normalizeMultiplatform
+import pl.kapucyni.gory4.app.common.utils.randomUUID
 
 @Serializable
 data class Director(
-    val id: String = "",
+    val id: String = randomUUID(),
     val name: String = "",
     val city: String = "",
     val region: String = "",
     val country: String = "Polska",
     val description: String = "",
-    val emailAddress: String? = null,
-    val phoneNumber: String? = null,
+    val emailAddress: String = "",
+    val phoneNumber: String = "",
     val placesLeft: Int = 0,
     val photoUrl: String? = null,
-) : ListItem(id) {
+) : ListItem(userId = id) {
 
     companion object {
         private const val SIMILARITY_THRESHOLD = 0.5

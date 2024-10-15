@@ -30,7 +30,10 @@ class HomeViewModel(
                     .collect { user ->
                         _state.update {
                             user?.let {
-                                HomeScreenState.UserSignedIn(it.userType)
+                                HomeScreenState.UserSignedIn(
+                                    userId = it.userId,
+                                    userType = it.userType,
+                                )
                             } ?: HomeScreenState.UserNotSignedIn
                         }
                     }

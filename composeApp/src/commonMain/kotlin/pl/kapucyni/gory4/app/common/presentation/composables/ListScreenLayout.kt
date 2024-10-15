@@ -79,7 +79,7 @@ fun ListScreenLayout(
         when (state) {
             is ListScreenState.Loading -> item { LoadingBox() }
             is ListScreenState.Success -> {
-                items(items = state.data, key = { it.itemId ?: state.data.indexOf(it) }) { item ->
+                items(items = state.data, key = { it.userId }) { item ->
                     itemLayout(item)
                 }
 
@@ -87,6 +87,8 @@ fun ListScreenLayout(
                     item {
                         EmptyListInfo()
                     }
+
+                item { HeightSpacer(40.dp) }
             }
         }
     }

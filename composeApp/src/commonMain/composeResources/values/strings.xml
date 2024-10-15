@@ -13,6 +13,8 @@
     <string name="cd_clear_field">Wyczyść pole</string>
     <string name="cd_close_dialog">Zamknij okno</string>
     <string name="empty_field_error">To pole nie może być puste!</string>
+    <string name="email_error_invalid">Nieprawidłowy adres mailowy!</string>
+    <string name="phone_error_invalid">Nieprawidłowy numer telefonu!</string>
 
     <!-- HOME STRINGS -->
     <string name="user_wait_for_approval">Aby uzyskać dostęp do zawartości aplikacji, Bracia muszą zatwierdzić Twoje konto!</string>
@@ -32,7 +34,6 @@
     <string name="back_to_sign_in">Powrót do logowania</string>
     <string name="forgot_password">Zapomniałem hasło</string>
     <string name="create_account">Utwórz konto</string>
-    <string name="email_error_invalid">Nieprawidłowy adres mailowy.</string>
     <string name="email_error_user_exists">Istnieje już konto przypisane do tego adresu!</string>
     <string name="password_error_empty">Podaj hasło!</string>
     <string name="password_error_wrong">Hasło musi mieć co najmniej 8 znaków (w tym małych i dużych liter oraz cyfr).</string>
@@ -57,6 +58,16 @@
 
     <!-- DIRECTORS STRINGS -->
     <string name="director_location">%1$s, %2$s</string>
+    <string name="director_add">Dodawanie kierownika</string>
+    <string name="director_edit">Edytowanie profilu</string>
+    <string name="director_name">Imię i nazwisko</string>
+    <string name="director_city">Miasto</string>
+    <string name="director_region">Region</string>
+    <string name="director_country">Państwo</string>
+    <string name="director_description">Opis</string>
+    <string name="director_email">Adres mailowy</string>
+    <string name="director_phone">Numer telefonu</string>
+    <string name="director_places_left">Pozostało miejsc:</string>
 
     <!-- USERS STRINGS -->
     <string name="created_at">Utworzono: %1$s</string>

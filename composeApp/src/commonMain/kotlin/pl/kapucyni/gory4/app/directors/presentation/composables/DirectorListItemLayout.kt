@@ -26,20 +26,20 @@ import pl.kapucyni.gory4.app.directors.domain.model.Director
 @Composable
 fun DirectorListItemLayout(
     director: Director,
-    onClick: (Director) -> Unit
+    onClick: (Director) -> Unit,
+    isAdmin: Boolean,
 ) {
     val focusManager = LocalFocusManager.current
 
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            disabledContentColor = MaterialTheme.colorScheme.secondaryContainer,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
         ),
         onClick = {
             focusManager.clearFocus(true)
             onClick(director)
         },
-        enabled = director.isAvailable(),
+        enabled = director.isAvailable() || isAdmin,
         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)
     ) {
         Row(
@@ -47,13 +47,13 @@ fun DirectorListItemLayout(
             modifier = Modifier.padding(8.dp)
         ) {
             DirectorPhoto(director.photoUrl)
-            WidthSpacer(8.dp)
+            WidthSpacer(4.dp)
             Column(verticalArrangement = Arrangement.Center) {
                 Text(
                     text = director.name,
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
+                        fontSize = 20.sp,
                     )
                 )
                 Text(

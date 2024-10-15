@@ -27,11 +27,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import pl.kapucyni.gory4.app.auth.presentation.AuthScreen
 import pl.kapucyni.gory4.app.common.presentation.Screen.Auth
 import pl.kapucyni.gory4.app.common.presentation.Screen.DirectorDetails
+import pl.kapucyni.gory4.app.common.presentation.Screen.DirectorEditor
 import pl.kapucyni.gory4.app.common.presentation.Screen.DirectorsList
 import pl.kapucyni.gory4.app.common.presentation.Screen.Home
 import pl.kapucyni.gory4.app.common.presentation.Screen.UsersList
 import pl.kapucyni.gory4.app.common.utils.navigateSafely
 import pl.kapucyni.gory4.app.common.utils.navigateUpSafely
+import pl.kapucyni.gory4.app.directors.presentation.DirectorEditorScreen
 import pl.kapucyni.gory4.app.directors.presentation.DirectorsListScreen
 import pl.kapucyni.gory4.app.home.presentation.HomeScreen
 import pl.kapucyni.gory4.app.theme.AppTheme
@@ -103,23 +105,35 @@ fun App() {
                 }
 
                 composable<DirectorsList> {
-                    val args = it.toRoute<DirectorsList>()
+                    val isAdmin = it.toRoute<DirectorsList>().isAdmin
                     DirectorsListScreen(
                         navigateUp = {
                             navController.navigateUpSafely(DirectorsList::class.simpleName)
                         },
                         openDetails = { director ->
                             navController.navigateSafely(
-                                route = DirectorDetails(director?.id),
+                                route =
+                                if (isAdmin) DirectorEditor(director?.userId)
+                                else DirectorDetails(director?.userId),
                             )
                         },
-                        addingEnabled = args.addingEnabled,
+                        isAdmin = isAdmin,
                     )
                 }
 
                 composable<DirectorDetails> {
                     val args = it.toRoute<DirectorDetails>()
                     Text(args.directorId ?: "null")
+                }
+
+                composable<DirectorEditor> {
+                    val directorId = it.toRoute<DirectorEditor>().directorId
+                    DirectorEditorScreen(
+                        navigateUp = {
+                            navController.navigateUpSafely(DirectorEditor::class.simpleName)
+                        },
+                        directorId = directorId,
+                    )
                 }
             }
         }

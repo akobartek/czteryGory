@@ -13,7 +13,7 @@ data class User(
     val email: String? = null,
     val userType: UserType = UserType.NONE,
     val createdAt: Long = Clock.System.now().toEpochMilliseconds(),
-): ListItem(id) {
+): ListItem(userId = id) {
 
     fun getFormattedCreatedAt(): String =
         Instant.fromEpochMilliseconds(createdAt)

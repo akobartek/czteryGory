@@ -13,20 +13,6 @@ inline fun <reified T> FirebaseFirestore.getFirestoreCollection(collectionName: 
             querySnapshot.documents.map { it.data() }
         }
 
-inline fun <reified T> FirebaseFirestore.getFirestoreCollectionByField(
-    collectionName: String,
-    fieldName: String,
-    fieldValue: Any
-): Flow<T?> =
-    this.collection(collectionName)
-        .where { fieldName equalTo fieldValue }
-        .snapshots
-        .map { querySnapshot ->
-            querySnapshot.documents
-                .map<DocumentSnapshot, T> { it.data() }
-                .firstOrNull()
-        }
-
 inline fun <reified T> FirebaseFirestore.getFirestoreDocument(
     collectionName: String,
     documentId: String,
@@ -44,3 +30,15 @@ suspend inline fun <reified T> FirebaseFirestore.saveObject(
     this.collection(collectionName)
         .document(id)
         .set(data)
+
+suspend inline fun <reified T> FirebaseFirestore.getFirestoreObjectByField(
+    collectionName: String,
+    fieldName: String,
+    fieldValue: Any
+): T? =
+    this.collection(collectionName)
+        .where { fieldName equalTo fieldValue }
+        .get()
+        .documents
+        .map<DocumentSnapshot, T?> { it.data() }
+        .firstOrNull()
