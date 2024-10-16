@@ -79,7 +79,6 @@ class AuthViewModel(
                     _snackbarAuthState.update { SnackbarEvent.SIGNED_IN }
                     it.copy(isSignedIn = true)
                 } else {
-                    _snackbarAuthState.update { SnackbarEvent.SIGN_IN_ERROR }
                     when (result.exceptionOrNull()) {
                         is EmailNotVerifiedException ->
                             it.copy(emailUnverifiedDialogVisible = true)

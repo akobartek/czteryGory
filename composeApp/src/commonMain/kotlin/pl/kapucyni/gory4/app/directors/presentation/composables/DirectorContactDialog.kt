@@ -26,7 +26,7 @@ fun DirectorContactDialog(
     dialogTitleId: StringResource,
     dialogText: String,
     uri: String,
-    onDismissRequest: () -> Unit,
+    onDismiss: () -> Unit,
 ) {
     val uriHandler = LocalUriHandler.current
     val clipboard = LocalClipboardManager.current
@@ -55,10 +55,11 @@ fun DirectorContactDialog(
                         .fillMaxWidth()
                 )
             },
-            onDismissRequest = onDismissRequest,
+            onDismissRequest = onDismiss,
             confirmButton = {
                 TextButton(onClick = {
                     clipboard.setText(AnnotatedString(dialogText))
+                    onDismiss()
                 }) {
                     Text(text = stringResource(Res.string.copy))
                 }

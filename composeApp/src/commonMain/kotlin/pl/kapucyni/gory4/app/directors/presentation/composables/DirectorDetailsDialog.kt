@@ -1,5 +1,6 @@
 package pl.kapucyni.gory4.app.directors.presentation.composables
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Mail
@@ -12,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -90,6 +92,7 @@ fun DirectorDetailsDialog(
                         fontSize = 15.sp,
                         textAlign = TextAlign.Justify,
                     ),
+                    modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }
         )
@@ -100,7 +103,7 @@ fun DirectorDetailsDialog(
             dialogTitleId = Res.string.director_phone,
             dialogText = director.phoneCountryCode + director.phoneNumber,
             uri = PHONE_URI,
-            onDismissRequest = { phoneDialogVisible = false },
+            onDismiss = { phoneDialogVisible = false },
         )
         DirectorContactDialog(
             isVisible = emailDialogVisible,
@@ -108,7 +111,7 @@ fun DirectorDetailsDialog(
             dialogTitleId = Res.string.director_email,
             dialogText = director.emailAddress,
             uri = EMAIL_URI,
-            onDismissRequest = { emailDialogVisible = false },
+            onDismiss = { emailDialogVisible = false },
         )
     }
 }
