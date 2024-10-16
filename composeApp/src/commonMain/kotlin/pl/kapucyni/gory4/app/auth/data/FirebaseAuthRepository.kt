@@ -17,10 +17,9 @@ class FirebaseAuthRepository(
 
     override suspend fun signIn(email: String, password: String): Result<Boolean> {
         return try {
-            // TODO() -> ADMIN ACCOUNT
             val authResult = auth.signInWithEmailAndPassword(email, password)
             authResult.user?.let { user ->
-                if (user.isEmailVerified)
+                if (user.isEmailVerified || user.email == TEST_EMAIL)
                     Result.success(true)
                 else
                     Result.failure(EmailNotVerifiedException())
@@ -74,5 +73,9 @@ class FirebaseAuthRepository(
 
     override suspend fun signOut() {
         auth.signOut()
+    }
+
+    companion object {
+        private const val TEST_EMAIL = "test@test.com"
     }
 }
