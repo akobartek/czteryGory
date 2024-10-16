@@ -38,7 +38,6 @@
     <string name="email_error_user_exists">Istnieje już konto przypisane do tego adresu!</string>
     <string name="password_error_empty">Podaj hasło!</string>
     <string name="password_error_wrong">Hasło musi mieć co najmniej 8 znaków (w tym małych i dużych liter oraz cyfr).</string>
-    <string name="password_error_invalid">Wpisano zły email lub hasło!</string>
     <string name="send">Wyślij</string>
     <string name="message_sent">Wysłano wiadomość, jeśli znaleziono konto powiązane z podanym adresem.</string>
     <string name="sign_up_error">Błąd w trakcie rejestracji, sprawdź swoje połączenie i spróbuj ponownie za kilka minut!</string>

@@ -53,10 +53,10 @@ import czterygory.composeapp.generated.resources.hide_password
 import czterygory.composeapp.generated.resources.ok
 import czterygory.composeapp.generated.resources.password
 import czterygory.composeapp.generated.resources.password_error_empty
-import czterygory.composeapp.generated.resources.password_error_invalid
 import czterygory.composeapp.generated.resources.password_error_wrong
 import czterygory.composeapp.generated.resources.show_password
 import czterygory.composeapp.generated.resources.sign_in
+import czterygory.composeapp.generated.resources.sign_in_error
 import czterygory.composeapp.generated.resources.sign_up
 import czterygory.composeapp.generated.resources.sign_up_successful_dialog_message
 import czterygory.composeapp.generated.resources.sign_up_successful_dialog_title
@@ -189,7 +189,7 @@ fun AuthScreen(
                                 when (state.passwordError) {
                                     PasswordErrorType.EMPTY -> Res.string.password_error_empty
                                     PasswordErrorType.WRONG -> Res.string.password_error_wrong
-                                    PasswordErrorType.INVALID -> Res.string.password_error_invalid
+                                    PasswordErrorType.INVALID -> Res.string.sign_in_error
                                     else -> Res.string.empty_field_error
                                 }
                             )
