@@ -17,8 +17,11 @@ sealed class Screen {
     data class DirectorsList(val isAdmin: Boolean) : Screen()
 
     @Serializable
-    data class DirectorDetails(val directorId: String? = null): Screen()
+    data class DirectorDetails(val directorId: String? = null) : Screen()
 
     @Serializable
-    data class DirectorEditor(val directorId: String? = null): Screen()
+    data class DirectorEditor(
+        val directorId: String? = null,
+        val isAdmin: Boolean = false
+    ) : Screen()
 }

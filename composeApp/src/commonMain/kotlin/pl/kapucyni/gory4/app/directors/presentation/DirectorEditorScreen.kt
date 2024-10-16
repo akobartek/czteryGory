@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -53,6 +54,7 @@ import pl.kapucyni.gory4.app.directors.presentation.composables.DirectorEditorTe
 fun DirectorEditorScreen(
     navigateUp: () -> Unit,
     directorId: String?,
+    isAdmin: Boolean,
     viewModel: DirectorEditorViewModel = koinInject(),
 ) {
     val focusManager = LocalFocusManager.current
@@ -80,6 +82,21 @@ fun DirectorEditorScreen(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null,
                         )
+                    }
+                },
+                actions = {
+                    if (isAdmin && directorId != null) {
+                        IconButton(onClick = {
+                            if (viewModel.deleteDirector()) {
+                                focusManager.clearFocus()
+                                navigateUp()
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = null,
+                            )
+                        }
                     }
                 },
             )

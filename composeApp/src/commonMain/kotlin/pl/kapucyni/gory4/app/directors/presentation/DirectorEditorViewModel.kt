@@ -11,12 +11,14 @@ import kotlinx.coroutines.launch
 import pl.kapucyni.gory4.app.common.utils.isValidEmail
 import pl.kapucyni.gory4.app.common.utils.isValidPhoneNumber
 import pl.kapucyni.gory4.app.directors.domain.model.Director
+import pl.kapucyni.gory4.app.directors.domain.usecases.DeleteDirectorUseCase
 import pl.kapucyni.gory4.app.directors.domain.usecases.GetDirectorByIdUseCase
 import pl.kapucyni.gory4.app.directors.domain.usecases.SaveDirectorUseCase
 
 class DirectorEditorViewModel(
     private val getDirectorByIdUseCase: GetDirectorByIdUseCase,
     private val saveDirectorUseCase: SaveDirectorUseCase,
+    private val deleteDirectorUseCase: DeleteDirectorUseCase,
 ) : ViewModel() {
 
     private val _director = MutableStateFlow<Director?>(null)
@@ -41,6 +43,15 @@ class DirectorEditorViewModel(
 
             viewModelScope.launch(Dispatchers.IO) {
                 saveDirectorUseCase(directorToSave)
+            }
+            true
+        } ?: false
+    }
+
+    fun deleteDirector(): Boolean {
+        return director.value?.let { directorToDelete ->
+            viewModelScope.launch(Dispatchers.IO) {
+                deleteDirectorUseCase(directorToDelete)
             }
             true
         } ?: false

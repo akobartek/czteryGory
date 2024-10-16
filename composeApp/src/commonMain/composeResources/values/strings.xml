@@ -10,6 +10,7 @@
     <string name="try_again">Spróbuj</string>
     <string name="load">Załaduj</string>
     <string name="stop">Przerwij</string>
+    <string name="copy">Kopiuj</string>
     <string name="cd_clear_field">Wyczyść pole</string>
     <string name="cd_close_dialog">Zamknij okno</string>
     <string name="empty_field_error">To pole nie może być puste!</string>

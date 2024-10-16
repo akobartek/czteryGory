@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,7 +45,7 @@ fun DirectorListItemLayout(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(8.dp)
         ) {
-            DirectorPhoto(director.photoUrl)
+            DirectorPhoto(photoUrl = director.photoUrl)
             WidthSpacer(4.dp)
             Column(verticalArrangement = Arrangement.Center) {
                 Text(

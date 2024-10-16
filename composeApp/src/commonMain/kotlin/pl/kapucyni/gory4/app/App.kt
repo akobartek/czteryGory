@@ -113,7 +113,7 @@ fun App() {
                         openDetails = { director ->
                             navController.navigateSafely(
                                 route =
-                                if (isAdmin) DirectorEditor(director?.userId)
+                                if (isAdmin) DirectorEditor(director?.userId, isAdmin)
                                 else DirectorDetails(director?.userId),
                             )
                         },
@@ -128,11 +128,13 @@ fun App() {
 
                 composable<DirectorEditor> {
                     val directorId = it.toRoute<DirectorEditor>().directorId
+                    val isAdmin = it.toRoute<DirectorEditor>().isAdmin
                     DirectorEditorScreen(
                         navigateUp = {
                             navController.navigateUpSafely(DirectorEditor::class.simpleName)
                         },
                         directorId = directorId,
+                        isAdmin = isAdmin,
                     )
                 }
             }

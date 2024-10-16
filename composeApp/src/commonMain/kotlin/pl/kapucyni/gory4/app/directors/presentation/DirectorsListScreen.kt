@@ -61,7 +61,7 @@ fun DirectorsListScreen(
     }
 
     DirectorDetailsDialog(
-        director = selectedDirector,
+        selectedDirector = selectedDirector,
         onDismiss = { selectedDirector = null },
     )
 }

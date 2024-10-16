@@ -4,6 +4,7 @@ import dev.gitlive.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import pl.kapucyni.gory4.app.common.data.COLLECTION_DIRECTORS
 import pl.kapucyni.gory4.app.common.data.FIELD_ID
+import pl.kapucyni.gory4.app.common.utils.deleteObject
 import pl.kapucyni.gory4.app.common.utils.getFirestoreCollection
 import pl.kapucyni.gory4.app.common.utils.getFirestoreObjectByField
 import pl.kapucyni.gory4.app.common.utils.saveObject
@@ -29,6 +30,12 @@ class FirebaseDirectorsRepository(
             collectionName = COLLECTION_DIRECTORS,
             id = director.id,
             data = director,
+        )
+
+    override suspend fun deleteDirector(director: Director) =
+        firestore.deleteObject(
+            collectionName = COLLECTION_DIRECTORS,
+            id = director.id,
         )
 
     override suspend fun filterDirectors(directors: List<Director>, query: String): List<Director> =

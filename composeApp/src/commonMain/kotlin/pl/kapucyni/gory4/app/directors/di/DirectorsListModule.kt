@@ -4,6 +4,7 @@ import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import pl.kapucyni.gory4.app.directors.data.FirebaseDirectorsRepository
 import pl.kapucyni.gory4.app.directors.domain.DirectorsRepository
+import pl.kapucyni.gory4.app.directors.domain.usecases.DeleteDirectorUseCase
 import pl.kapucyni.gory4.app.directors.domain.usecases.FilterDirectorsUseCase
 import pl.kapucyni.gory4.app.directors.domain.usecases.GetDirectorByIdUseCase
 import pl.kapucyni.gory4.app.directors.domain.usecases.GetDirectorsUseCase
@@ -17,8 +18,9 @@ val directorsModule = module {
     factory { GetDirectorsUseCase(get()) }
     factory { FilterDirectorsUseCase(get()) }
     factory { SaveDirectorUseCase(get()) }
+    factory { DeleteDirectorUseCase(get()) }
     factory { GetDirectorByIdUseCase(get()) }
 
     single { DirectorsListViewModel(get(), get()) }
-    viewModel { DirectorEditorViewModel(get(), get()) }
+    viewModel { DirectorEditorViewModel(get(), get(), get()) }
 }

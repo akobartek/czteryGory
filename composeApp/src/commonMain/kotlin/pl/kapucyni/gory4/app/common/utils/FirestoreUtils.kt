@@ -31,6 +31,14 @@ suspend inline fun <reified T> FirebaseFirestore.saveObject(
         .document(id)
         .set(data)
 
+suspend inline fun FirebaseFirestore.deleteObject(
+    collectionName: String,
+    id: String,
+) =
+    this.collection(collectionName)
+        .document(id)
+        .delete()
+
 suspend inline fun <reified T> FirebaseFirestore.getFirestoreObjectByField(
     collectionName: String,
     fieldName: String,

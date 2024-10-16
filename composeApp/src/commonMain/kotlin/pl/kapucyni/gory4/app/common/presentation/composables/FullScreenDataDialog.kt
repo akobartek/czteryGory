@@ -54,10 +54,11 @@ fun FullScreenDataDialog(
                     actions()
                 }
                 Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(top = 4.dp, start = 12.dp, end = 12.dp)
+                        .padding(horizontal = 24.dp)
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()),
                 ) {
                     content()
                 }
