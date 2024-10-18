@@ -6,4 +6,5 @@ import pl.kapucyni.gory4.app.common.domain.model.User
 interface UserRepository {
     fun getCurrentUser(): Flow<User?>
     suspend fun signOut()
+    suspend fun deleteAccount()
 }

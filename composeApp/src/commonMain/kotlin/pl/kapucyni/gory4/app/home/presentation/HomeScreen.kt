@@ -1,6 +1,7 @@
 package pl.kapucyni.gory4.app.home.presentation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,12 +15,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import czterygory.composeapp.generated.resources.Res
+import czterygory.composeapp.generated.resources.delete_account
 import czterygory.composeapp.generated.resources.list_of_directors
 import czterygory.composeapp.generated.resources.list_of_users
 import czterygory.composeapp.generated.resources.profile_edition
@@ -33,6 +38,7 @@ import pl.kapucyni.gory4.app.common.presentation.Screen
 import pl.kapucyni.gory4.app.common.presentation.composables.AppLogo
 import pl.kapucyni.gory4.app.common.presentation.composables.HeightSpacer
 import pl.kapucyni.gory4.app.common.presentation.composables.LoadingBox
+import pl.kapucyni.gory4.app.home.presentation.composables.DeleteAccountDialog
 
 @Composable
 fun HomeScreen(
@@ -40,6 +46,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinInject(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    var deleteAccountVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(state) {
         if (state is HomeScreenState.UserNotSignedIn)
@@ -109,8 +117,25 @@ fun HomeScreen(
                     ) {
                         Text(stringResource(Res.string.sign_out))
                     }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    OutlinedButton(
+                        onClick = { deleteAccountVisible = true },
+                        modifier = Modifier
+                            .defaultMinSize(minWidth = 120.dp)
+                            .padding(top = 8.dp),
+                    ) {
+                        Text(stringResource(Res.string.delete_account))
+                    }
                 }
             }
+
+            DeleteAccountDialog(
+                isVisible = deleteAccountVisible,
+                onDelete = viewModel::deleteAccount,
+                onDismiss = { deleteAccountVisible = false }
+            )
         }
     }
 }

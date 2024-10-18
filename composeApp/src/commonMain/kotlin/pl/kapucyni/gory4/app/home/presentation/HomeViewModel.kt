@@ -49,4 +49,12 @@ class HomeViewModel(
             _state.update { HomeScreenState.UserNotSignedIn }
         }
     }
+
+    fun deleteAccount() {
+        viewModelScope.launch(Dispatchers.IO) {
+            userJob?.cancel()
+            userRepository.deleteAccount()
+            _state.update { HomeScreenState.UserNotSignedIn }
+        }
+    }
 }
